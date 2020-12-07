@@ -104,7 +104,6 @@ use edustef\mvcFrame\Application;
 use app\controllers\SiteController;
 use app\models\User;
 
-
 // The configuration for env variables using the vlucas/phpdotenv
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
