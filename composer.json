@@ -10,7 +10,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "edustef\\php-mvc-framework\\": "."
+            "edustef\\mvcFrame\\": "."
         }
-    }
+    } 
 }
