@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core\exceptions;
+namespace edustef\mvcFrame\exceptions;
 
 class ForbiddenException extends \Exception
 {

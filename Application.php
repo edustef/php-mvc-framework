@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace edustef\mvcFrame;
 
 class Application
 {
@@ -31,7 +31,7 @@ class Application
     $this->view = new View();
     $this->router = new Router($this->request, $this->response);
 
-    $this->userClass = $config['userClass'];
+    $this->userClass = $config['userClass'] ?? '';
     $this->database = new Database($config['db']);
 
     // Get the User from Session if it exists

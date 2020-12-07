@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core;
+namespace edustef\mvcFrame;
 
-use app\core\middlewares\Middleware;
+use edustef\mvcFrame\middlewares\Middleware;
 
 class Controller
 {

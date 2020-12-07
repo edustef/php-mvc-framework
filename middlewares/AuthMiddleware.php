@@ -1,9 +1,9 @@
 <?php
 
-namespace app\core\middlewares;
+namespace edustef\mvcFrame\middlewares;
 
-use app\core\Application;
-use app\core\exceptions\ForbiddenException;
+use edustef\mvcFrame\Application;
+use edustef\mvcFrame\exceptions\ForbiddenException;
 
 class AuthMiddleware extends Middleware
 {

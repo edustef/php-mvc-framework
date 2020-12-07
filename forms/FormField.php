@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core\forms;
+namespace edustef\mvcFrame\forms;
 
-use app\core\Model;
+use edustef\mvcFrame\Model;
 
 class FormField
 {

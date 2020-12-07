@@ -1,8 +1,8 @@
 <?php
 
-namespace app\core;
+namespace edustef\mvcFrame;
 
-use app\core\exceptions\NotFoundException;
+use edustef\mvcFrame\exceptions\NotFoundException;
 
 class Router
 {
@@ -43,7 +43,7 @@ class Router
    * @throws NotFoundException; 
    * @throws ForbiddenException;
    */
-  public function resolve() :string
+  public function resolve(): string
   {
     $path = $this->request->getPath();
     $method = $this->request->method();
