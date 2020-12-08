@@ -4,8 +4,16 @@ namespace edustef\mvcFrame;
 
 class View
 {
-  public string $layout = 'main';
+  public string $layout = '';
   public string $title = '';
+
+  public function __construct($defaultLayout, $title)
+  {
+    if ($defaultLayout == '') {
+      $this->layout = $defaultLayout;
+    }
+    $this->title = $title;
+  }
 
   public function renderView($view, $params = []): string
   {
@@ -30,10 +38,5 @@ class View
     ob_start();
     include_once Application::$ROOT_DIR . 'views/' . $view . '.php';
     return ob_get_clean();
-  }
-
-  public function setLayout($layout)
-  {
-    $this->layout = $layout;
   }
 }

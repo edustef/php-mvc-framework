@@ -28,7 +28,7 @@ class Application
     $this->request = new Request();
     $this->response = new Response();
     $this->session = new Session();
-    $this->view = new View();
+    $this->view = new View($config['defaultLayout'] ?? '', $config['title'] ?? '');
     $this->router = new Router($this->request, $this->response);
 
     $this->userClass = $config['userClass'] ?? '';
@@ -47,7 +47,9 @@ class Application
     try {
       echo $this->router->resolve();
     } catch (\Exception $e) {
-      $this->response->setStatusCode($e->getCode());
+      if (is_numeric($e->getCode())) {
+        $this->response->setStatusCode($e->getCode());
+      }
       echo $this->view->renderView('_error', [
         'exception' => $e
       ]);
@@ -73,5 +75,15 @@ class Application
   public static function isGuest(): bool
   {
     return !self::$app->user;
+  }
+
+  public function getTitle(): string
+  {
+    return $this->view->title;
+  }
+
+  public function setTitle($title)
+  {
+    $this->view->title = $this->view->title . $title;
   }
 }

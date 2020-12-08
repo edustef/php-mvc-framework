@@ -31,7 +31,7 @@ abstract class Model
     return $this->attributes()[$attribute];
   }
 
-  public function validate()
+  public function validate() :bool
   {
     foreach ($this->rules() as $attribute => $rules) {
       $value = $this->{$attribute};
@@ -82,14 +82,16 @@ abstract class Model
     return empty($this->errors);
   }
 
-  public function addError($attribute, $rule, $params = [])
+  private function addError($attribute, $rule, $params = [])
   {
     $errorMessage = $this->errorMessages($rule);
 
     foreach ($params as $key => $value) {
+      if (!is_numeric($value)) {
+        $value = strtolower($value);
+      }
       $errorMessage = str_replace('{' . $key . '}', $value, $errorMessage);
     }
-
     $this->errors[$attribute][] = $errorMessage;
   }
 
@@ -112,12 +114,12 @@ abstract class Model
     return $errorMessages[$ruleName] ?? '';
   }
 
-  public function hasErrors($attribute)
+  public function hasErrors($attribute) :bool
   {
     return $this->errors[$attribute] ?? false;
   }
 
-  public function getFirstError($attribute)
+  public function getFirstError($attribute) :string
   {
     return $this->errors[$attribute][0] ?? '';
   }
