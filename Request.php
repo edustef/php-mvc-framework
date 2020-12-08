@@ -32,16 +32,23 @@ class Request
     return $this->method() === 'post';
   }
 
+  public function isAjax(): bool
+  {
+    $body = $this->getBody();
+    echo $body['isAjax'];
+    return isset($body['isAjax']);
+  }
+
   public function getBody(): array
   {
     $body = [];
-    if ($this->method() == "get") {
+    if ($this->isGet()) {
       foreach (array_keys($_GET) as $key) {
         $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
       }
     }
 
-    if ($this->method() == "post") {
+    if ($this->isPost()) {
       foreach (array_keys($_POST) as $key) {
         $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
       }

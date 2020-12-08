@@ -28,10 +28,10 @@ abstract class Model
 
   public function getLabel($attribute)
   {
-    return $this->attributes()[$attribute];
+    return $this->attributes()[$attribute]['label'];
   }
 
-  public function validate() :bool
+  public function validate(): bool
   {
     foreach ($this->rules() as $attribute => $rules) {
       $value = $this->{$attribute};
@@ -114,12 +114,12 @@ abstract class Model
     return $errorMessages[$ruleName] ?? '';
   }
 
-  public function hasErrors($attribute) :bool
+  public function hasErrors($attribute): bool
   {
-    return $this->errors[$attribute] ?? false;
+    return isset($this->errors[$attribute]);
   }
 
-  public function getFirstError($attribute) :string
+  public function getFirstError($attribute): string
   {
     return $this->errors[$attribute][0] ?? '';
   }

@@ -9,7 +9,7 @@ class View
 
   public function __construct($defaultLayout, $title)
   {
-    if ($defaultLayout == '') {
+    if ($defaultLayout !== '') {
       $this->layout = $defaultLayout;
     }
     $this->title = $title;
