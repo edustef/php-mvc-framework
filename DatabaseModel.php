@@ -10,8 +10,14 @@ abstract class DatabaseModel extends Model
   public function save()
   {
     $tableName = static::tableName();
-    $attributes = array_filter($this->attributes(), fn ($attr) => $attr['isSaved'] === true);
+    $attributes = array_filter($this->attributes(), function ($attr) {
+      if (!isset($attr['isSaved'])) {
+        $attr['isSaved'] = true;
+      }
+      return $attr['isSaved'] === true;
+    });
     $attributes = array_keys($attributes);
+
     $params = array_map(fn ($attr) => ':' . $attr,  $attributes);
 
     $stmnt = self::prepare('INSERT INTO ' . $tableName . ' (' . implode(',', $attributes) . ') VALUES (' . implode(',', $params) . ')');

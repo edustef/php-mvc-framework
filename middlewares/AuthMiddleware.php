@@ -15,11 +15,15 @@ class AuthMiddleware extends Middleware
     $this->actions = $actions;
   }
 
-  public function execute()
+  public function execute($cb = null)
   {
     if (Application::isGuest()) {
       if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) {
-        throw new ForbiddenException();
+        if (!$cb) {
+          throw new ForbiddenException();
+        }
+
+        $cb();
       }
     }
   }

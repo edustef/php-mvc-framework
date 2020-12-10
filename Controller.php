@@ -14,8 +14,8 @@ class Controller
     return Application::$app->view->renderView($view, $params);
   }
 
-  public function registerMiddleware(Middleware $middleware)
+  public function registerMiddleware(Middleware $middleware, $cb = null)
   {
-    $this->middlewares[] = $middleware;
+    $this->middlewares[] = [$middleware, $cb];
   }
 }
