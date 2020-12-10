@@ -16,6 +16,7 @@ abstract class DatabaseModel extends Model
       }
       return $attr['isSaved'] === true;
     });
+
     $attributes = array_keys($attributes);
 
     $params = array_map(fn ($attr) => ':' . $attr,  $attributes);
@@ -42,6 +43,15 @@ abstract class DatabaseModel extends Model
 
     $stmnt->execute();
     return $stmnt->fetchObject(static::class);
+  }
+
+  public static function getAll()
+  {
+    $tableName = static::tableName();
+    $stmnt = self::prepare("SELECT * FROM $tableName");
+    $stmnt->execute();
+
+    return $stmnt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
   }
 
   public static function prepare(string $mysql)
