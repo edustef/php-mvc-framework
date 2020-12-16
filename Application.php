@@ -28,7 +28,7 @@ class Application
     $this->request = new Request();
     $this->response = new Response();
     $this->session = new Session();
-    $this->view = new View($config['defaultLayout'] ?? '', $config['title'] ?? '');
+    $this->view = new View($config['defaultLayout'] ?? '', $config['title'] ?? 'PHP Application');
     $this->router = new Router($this->request, $this->response);
 
     $this->userClass = $config['userClass'] ?? '';
@@ -36,7 +36,7 @@ class Application
 
     // Get the User from Session if it exists
     $primaryValue = $this->session->get('user');
-    if ($primaryValue) {
+    if ($this->userClass && $primaryValue) {
       $primaryKey = $this->userClass::primaryKey();
       $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
     }
@@ -72,9 +72,9 @@ class Application
     $this->session->remove('user');
   }
 
-  public static function isGuest(): bool
+  public function isGuest(): bool
   {
-    return !self::$app->user;
+    return $this->session->get('user') === false;
   }
 
   public function getTitle(): string

@@ -10,6 +10,7 @@ abstract class Model
   public const RULE_MAX = 'max';
   public const RULE_MATCH = 'match';
   public const RULE_UNIQUE = 'unique';
+  public const RULE_NUMERIC = 'numeric';
 
   abstract public function attributes(): array;
 
@@ -55,6 +56,10 @@ abstract class Model
         }
 
         if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+          $this->addError($attribute, self::RULE_MAX, $rule);
+        }
+
+        if ($ruleName === self::RULE_NUMERIC && !is_numeric($value)) {
           $this->addError($attribute, self::RULE_MAX, $rule);
         }
 

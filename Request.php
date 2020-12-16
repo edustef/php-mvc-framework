@@ -35,7 +35,7 @@ class Request
   public function isAjax(): bool
   {
     $body = $this->getBody();
-    return isset($body['isAjax']);
+    return isset($body['action']) && $this->isPost();
   }
 
   public function getBody(): array

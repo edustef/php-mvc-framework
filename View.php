@@ -39,4 +39,9 @@ class View
     include_once Application::$ROOT_DIR . 'views/' . $view . '.php';
     return ob_get_clean();
   }
+
+  public function useLayout($layout)
+  {
+    $this->layout = $layout;
+  }
 }
