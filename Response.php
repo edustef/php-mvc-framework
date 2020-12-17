@@ -13,4 +13,11 @@ class Response
   {
     header('Location: ' . $path);
   }
+
+  public function json($data, $statusCode = 200)
+  {
+    header('Content-Type: application/json');
+    $this->setStatusCode($statusCode);
+    return json_encode($data);
+  }
 }

@@ -3,6 +3,7 @@
 namespace edustef\mvcFrame;
 
 use edustef\mvcFrame\exceptions\NotFoundException;
+use edustef\mvcFrame\Application;
 
 class Router
 {
@@ -19,26 +20,12 @@ class Router
     $this->request = $request;
   }
 
-  /**
-   * Adds the path and callback to the GET router
-   * The callback is called when resolving the path 
-   */
-  public function get($path, $callback)
+  public function add($path, $callback)
   {
-    $this->routes['get'][$path] = $callback;
+    $this->routes['/api' . $path] = $callback;
   }
 
   /**
-   * Adds the path and callback to the POST router. 
-   * The callback is called when resolving the path 
-   */
-  public function post($path, $callback)
-  {
-    $this->routes['post'][$path] = $callback;
-  }
-
-  /**
-   * Will resolve the method and path of the REQUEST
    * and will create the controller and run it's method referenced by the callback.
    * @throws NotFoundException; 
    * @throws ForbiddenException;
@@ -46,16 +33,11 @@ class Router
   public function resolve(): string
   {
     $path = $this->request->getPath();
-    $method = $this->request->method();
 
-    $callback = $this->routes[$method][$path] ?? false;
+    $callback = $this->routes[$path] ?? false;
 
     if ($callback === false) {
       throw new NotFoundException();
-    }
-
-    if (is_string($callback)) {
-      return Application::$app->view->renderView($callback);
     }
 
     //create instance of controller

@@ -8,7 +8,6 @@ class Application
   public static string $ROOT_DIR;
 
   public Router $router;
-  public View $view;
   public Request $request;
   public Response $response;
   public Session $session;
@@ -47,12 +46,15 @@ class Application
     try {
       echo $this->router->resolve();
     } catch (\Exception $e) {
+      $code = null;
+      $message = '';
       if (is_numeric($e->getCode())) {
-        $this->response->setStatusCode($e->getCode());
+        $code = $e->getCode();
       }
-      echo $this->view->renderView('_error', [
-        'exception' => $e
-      ]);
+
+      echo $this->response->json([
+        'message' => $e->getMessage(),
+      ], $code);
     }
   }
 
@@ -75,15 +77,5 @@ class Application
   public function isGuest(): bool
   {
     return $this->session->get('user') === false;
-  }
-
-  public function getTitle(): string
-  {
-    return $this->view->title;
-  }
-
-  public function setTitle($title)
-  {
-    $this->view->title = $this->view->title . $title;
   }
 }
